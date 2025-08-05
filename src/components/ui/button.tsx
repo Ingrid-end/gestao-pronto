@@ -18,6 +18,11 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Dashboard action variants
+        "action-gray": "bg-action-gray text-action-gray-foreground hover:bg-action-gray/90 shadow-button transition-smooth",
+        "action-blue": "bg-action-blue text-action-blue-foreground hover:bg-action-blue/90 shadow-button transition-smooth",
+        "action-green": "bg-action-green text-action-green-foreground hover:bg-action-green/90 shadow-button transition-smooth",
+        "action-red": "bg-action-red text-action-red-foreground hover:bg-action-red/90 shadow-button transition-smooth",
       },
       size: {
         default: "h-10 px-4 py-2",

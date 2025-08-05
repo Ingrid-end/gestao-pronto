@@ -52,6 +52,40 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				info: {
+					DEFAULT: 'hsl(var(--info))',
+					foreground: 'hsl(var(--info-foreground))'
+				},
+				dashboard: {
+					header: 'hsl(var(--dashboard-header))',
+					'header-foreground': 'hsl(var(--dashboard-header-foreground))'
+				},
+				table: {
+					header: 'hsl(var(--table-header))',
+					'row-even': 'hsl(var(--table-row-even))',
+					'row-odd': 'hsl(var(--table-row-odd))',
+					'row-hover': 'hsl(var(--table-row-hover))',
+					'row-selected': 'hsl(var(--table-row-selected))',
+					'row-warning': 'hsl(var(--table-row-warning))'
+				},
+				action: {
+					gray: 'hsl(var(--action-gray))',
+					'gray-foreground': 'hsl(var(--action-gray-foreground))',
+					blue: 'hsl(var(--action-blue))',
+					'blue-foreground': 'hsl(var(--action-blue-foreground))',
+					green: 'hsl(var(--action-green))',
+					'green-foreground': 'hsl(var(--action-green-foreground))',
+					red: 'hsl(var(--action-red))',
+					'red-foreground': 'hsl(var(--action-red-foreground))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +96,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-header': 'var(--gradient-header)'
+			},
+			boxShadow: {
+				'card': 'var(--shadow-card)',
+				'button': 'var(--shadow-button)'
+			},
+			transitionProperty: {
+				'smooth': 'var(--transition-smooth)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
