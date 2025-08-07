@@ -8,6 +8,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { OrderItem } from "../../types/order";
+import { sendOrders } from "../../services/api";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 interface OrderConfirmationModalProps {
   open: boolean;
@@ -22,6 +25,8 @@ export const OrderConfirmationModal = ({
   onConfirm,
   selectedItems
 }: OrderConfirmationModalProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
   const groupedItems = selectedItems.reduce((acc, item) => {
     const key = item.tabela_cod;
     if (!acc[key]) {
@@ -35,9 +40,57 @@ export const OrderConfirmationModal = ({
     acc[key].total += item.total;
     return acc;
   }, {} as Record<string, { items: OrderItem[]; total: number; tabela: string }>);
-  const handleConfirm = () => {
-    onConfirm();
-    onOpenChange(false);
+  const handleConfirm = async () => {
+    try {
+      setIsLoading(true);
+      console.log('Items selecionados:', selectedItems);
+
+      // Mapear os itens selecionados para o formato esperado pela API
+      const itemsToSend = selectedItems.map(item => {
+        const mappedItem = {
+          UF: item.uf,
+          CD: parseInt(item.cd),
+          NOME_CD: item.nome_cd,
+          CONDIC_COMERC: item.cond_com,
+          FABRICANTE: item.fabricante,
+          TABELA_COD: parseInt(item.tabela_cod),
+          TABELA: item.tabela,
+          TIPO_ENVIO: item.tipo_envio,
+          EMAIL: item.email,
+          COD_PROD: parseInt(item.cod_prod),
+          EAN: item.ean,
+          PROD: item.produto,
+          P_BRUTO: item.preco_bruto,
+          DESC: item.desconto,
+          P_LIQ: item.preco_liquido,
+          TOT_P_LIQ_SOMA: item.total
+        };
+        console.log('Item mapeado:', mappedItem);
+        return mappedItem;
+      });
+
+      // Enviar os pedidos
+      console.log('Enviando pedidos...');
+      await sendOrders(itemsToSend);
+      console.log('Pedidos enviados com sucesso!');
+
+      toast({
+        title: "Sucesso",
+        description: "Pedidos enviados com sucesso!",
+      });
+
+      onConfirm();
+      onOpenChange(false);
+    } catch (error: any) {
+      console.error('Erro ao enviar pedidos:', error.response?.data || error);
+      toast({
+        title: "Erro",
+        description: error.response?.data?.message || "Erro ao enviar os pedidos. Por favor, tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -86,14 +139,16 @@ export const OrderConfirmationModal = ({
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
+            disabled={isLoading}
           >
             Cancelar
           </Button>
           <Button
             variant="action-green"
             onClick={handleConfirm}
+            disabled={isLoading}
           >
-            Confirmar Envio
+            {isLoading ? "Enviando..." : "Confirmar Envio"}
           </Button>
         </DialogFooter>
       </DialogContent>
