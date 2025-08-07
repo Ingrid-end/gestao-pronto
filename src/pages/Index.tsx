@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { DashboardHeader } from "../components/dashboard/DashboardHeader";
 import { OrderTable } from "../components/dashboard/OrderTable";
-import { OrderSummary } from "../components/dashboard/OrderSummary";
 import { OrderConfirmationModal } from "../components/dashboard/OrderConfirmationModal";
 import { useOrderData } from "../hooks/useOrderData";
 import { useToast } from "../hooks/use-toast";
@@ -130,13 +129,14 @@ const Index = () => {
           onSelectionChange={setSelectedItems}
         />
 
-        <div id="order-summary">
+        {/* Remover o resumo do pedido */}
+        {/* <div id="order-summary">
           <OrderSummary
             summary={orderSummary}
             selectedItemsCount={selectedItems.length}
             totalItemsCount={orderData.length}
           />
-        </div>
+        </div> */}
 
         <OrderConfirmationModal
           open={showConfirmationModal}

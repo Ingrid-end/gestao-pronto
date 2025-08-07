@@ -195,7 +195,8 @@ export const OrderTable = ({
                   </div>
                 </th>
               ))}
-              <th className="p-3 text-left w-28">Ações</th>
+              {/* Remover coluna de ações */}
+              {/* <th className="p-3 text-left w-28">Ações</th> */}
             </tr>
           </thead>
 
@@ -230,7 +231,8 @@ export const OrderTable = ({
                       {formatValue(item[column.key as keyof OrderItem], column.type)}
                     </td>
                   ))}
-                  <td className="p-3">
+                  {/* Remover célula de ações */}
+                  {/* <td className="p-3">
                     <Input
                       type="number"
                       min="0"
@@ -238,7 +240,7 @@ export const OrderTable = ({
                       onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
                       className="w-20 h-8 text-xs"
                     />
-                  </td>
+                  </td> */}
                 </tr>
               );
             })}

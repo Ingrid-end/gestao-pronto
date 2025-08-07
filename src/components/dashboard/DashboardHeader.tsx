@@ -28,48 +28,11 @@ export const DashboardHeader = ({
     <div className="bg-gradient-header p-6 rounded-t-lg shadow-card">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-dashboard-header-foreground">
-          Sistema de Gerenciamento de Pedidos
+          Aprovação de Pedidos por Email
         </h1>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="action-gray"
-            size="sm"
-            onClick={onExportCSV}
-            className="text-xs"
-          >
-            <Download className="h-4 w-4" />
-            Exportar CSV
-          </Button>
-        </div>
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <Button
-          variant="action-gray"
-          onClick={onSummaryOrder}
-          className="text-sm"
-        >
-          <FileText className="h-4 w-4" />
-          Resumo Pedido
-        </Button>
-
-        <Button
-          variant="action-blue"
-          onClick={onModifyOrder}
-          className="text-sm"
-        >
-          <Settings className="h-4 w-4" />
-          Alterar Pedido
-        </Button>
-
-        <Button
-          variant="action-blue"
-          onClick={onSaveOrder}
-          className="text-sm"
-        >
-          Salvar
-        </Button>
-
         <Button
           variant="action-green"
           onClick={onSendOrder}
@@ -79,15 +42,6 @@ export const DashboardHeader = ({
         >
           <Send className="h-4 w-4" />
           Enviar Pedido
-        </Button>
-
-        <Button
-          variant="action-red"
-          onClick={onClose}
-          className="text-sm"
-        >
-          <X className="h-4 w-4" />
-          Fechar
         </Button>
       </div>
 
