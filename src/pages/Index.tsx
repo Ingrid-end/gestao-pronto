@@ -65,24 +65,6 @@ const Index = () => {
   };
 
   const handleSendOrder = () => {
-    if (selectedItems.length === 0) {
-      toast({
-        title: "Atenção",
-        description: "Selecione pelo menos um item para enviar",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    if (orderSummary.total_geral < orderSummary.valor_minimo_pedido) {
-      toast({
-        title: "Valor Insuficiente",
-        description: `Valor mínimo do pedido: R$ ${orderSummary.valor_minimo_pedido.toFixed(2)}`,
-        variant: "destructive"
-      });
-      return;
-    }
-
     setShowConfirmationModal(true);
   };
 
@@ -118,8 +100,7 @@ const Index = () => {
           onSaveOrder={handleSaveOrder}
           onSendOrder={handleSendOrder}
           onClose={handleClose}
-          totalValue={orderSummary.total_geral}
-          minOrderValue={orderSummary.valor_minimo_pedido}
+          selectedItems={orderData.filter(item => selectedItems.includes(item.id))}
         />
 
         <OrderTable
@@ -142,8 +123,7 @@ const Index = () => {
           open={showConfirmationModal}
           onOpenChange={setShowConfirmationModal}
           onConfirm={handleConfirmSendOrder}
-          summary={orderSummary}
-          selectedItemsCount={selectedItems.length}
+          selectedItems={orderData.filter(item => selectedItems.includes(item.id))}
         />
       </div>
     </div>

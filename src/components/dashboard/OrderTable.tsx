@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { OrderItem, ColumnFilter, SortConfig } from "../../types/order";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronUp, ChevronDown, Search } from "lucide-react";
+import { ChevronUp, ChevronDown, Search, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { fetchOrders, type ApiOrderItem } from "@/services/api";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface OrderTableProps {
   data: OrderItem[];
@@ -14,7 +16,6 @@ interface OrderTableProps {
 }
 
 export const OrderTable = ({
-  data,
   onDataChange,
   selectedItems,
   onSelectionChange
@@ -22,6 +23,50 @@ export const OrderTable = ({
   const [filters, setFilters] = useState<ColumnFilter>({});
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: null, direction: 'asc' });
   const [showFilters, setShowFilters] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [orders, setOrders] = useState<OrderItem[]>([]);
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const response = await fetchOrders();
+        
+        // Map API data to OrderItem format
+        const mappedOrders = response.value.map((item: ApiOrderItem, index: number) => ({
+          id: `${item.COD_PROD}-${index}`,
+          uf: item.UF,
+          cd: item.CD.toString(),
+          nome_cd: item.NOME_CD,
+          cond_com: item.CONDIC_COMERC,
+          fabricante: item.FABRICANTE,
+          tabela_cod: item.TABELA_COD.toString(),
+          tabela: item.TABELA,
+          tipo_envio: item.TIPO_ENVIO,
+          email: item.EMAIL,
+          cod_prod: item.COD_PROD.toString(),
+          ean: item.EAN,
+          produto: item.PROD,
+          preco_bruto: item.P_BRUTO,
+          desconto: item.DESC,
+          preco_liquido: item.P_LIQ,
+          total: item.TOT_P_LIQ_SOMA
+        }));
+
+        setOrders(mappedOrders);
+        onDataChange(mappedOrders);
+      } catch (err) {
+        setError('Erro ao carregar pedidos. Por favor, tente novamente.');
+        console.error('Error loading orders:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadOrders();
+  }, [onDataChange]);
 
   // Colunas da tabela
   const columns = [
@@ -40,14 +85,11 @@ export const OrderTable = ({
     { key: 'preco_bruto', label: 'Preço Bruto', width: 'w-28', type: 'currency' },
     { key: 'desconto', label: 'Desconto (%)', width: 'w-28', type: 'percent' },
     { key: 'preco_liquido', label: 'Preço Líquido', width: 'w-28', type: 'currency' },
-    { key: 'estoque', label: 'Estoque', width: 'w-24', type: 'number' },
-    { key: 'qtd_minima', label: 'Qtd. Mínima', width: 'w-28', type: 'number' },
-    { key: 'qtd_comprada', label: 'Qtd. Comprada', width: 'w-28', type: 'number' },
     { key: 'total', label: 'Total', width: 'w-28', type: 'currency' }
   ];
 
   // Filtrar dados
-  const filteredData = data.filter(item => {
+  const filteredData = orders.filter(item => {
     return Object.entries(filters).every(([key, value]) => {
       if (!value) return true;
       const itemValue = String(item[key as keyof OrderItem]).toLowerCase();
@@ -99,13 +141,14 @@ export const OrderTable = ({
 
   // Atualizar quantidade comprada
   const handleQuantityChange = (id: string, newQuantity: number) => {
-    const updatedData = data.map(item => {
+    const updatedData = orders.map(item => {
       if (item.id === id) {
         const total = newQuantity * item.preco_liquido;
         return { ...item, qtd_comprada: newQuantity, total };
       }
       return item;
     });
+    setOrders(updatedData);
     onDataChange(updatedData);
   };
 
@@ -164,6 +207,19 @@ export const OrderTable = ({
         )}
       </div>
 
+      {/* Loading e Error states */}
+      {isLoading && (
+        <div className="flex items-center justify-center py-8">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+      )}
+
+      {error && (
+        <Alert variant="destructive" className="m-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
       {/* Tabela */}
       <div className="overflow-x-auto">
         <table className="w-full">
@@ -204,8 +260,6 @@ export const OrderTable = ({
           <tbody>
             {sortedData.map((item, index) => {
               const isSelected = selectedItems.includes(item.id);
-              const isHighStock = item.estoque > 1000;
-              
               return (
                 <tr
                   key={item.id}
@@ -213,7 +267,6 @@ export const OrderTable = ({
                     "border-b border-border transition-colors",
                     index % 2 === 0 ? "bg-table-row-even" : "bg-table-row-odd",
                     isSelected && "bg-table-row-selected",
-                    isHighStock && "bg-table-row-warning",
                     "hover:bg-table-row-hover"
                   )}
                 >

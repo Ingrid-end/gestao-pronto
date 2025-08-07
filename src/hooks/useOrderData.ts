@@ -10,8 +10,6 @@ export const useOrderData = () => {
   const orderSummary = useMemo<OrderSummary>(() => {
     const selectedData = orderData.filter(item => selectedItems.includes(item.id));
     
-    const qtd_min_total = selectedData.reduce((sum, item) => sum + item.qtd_minima, 0);
-    const qtd_total = selectedData.reduce((sum, item) => sum + item.qtd_comprada, 0);
     const total_geral = selectedData.reduce((sum, item) => sum + item.total, 0);
     
     // Cálculo da economia (desconto aplicado)
@@ -19,15 +17,10 @@ export const useOrderData = () => {
       sum + (item.preco_bruto * item.qtd_comprada), 0
     );
     const economia_total = valor_bruto_total - total_geral;
-    
-    const valor_minimo_pedido = 150.00; // Valor mínimo configurável
 
     return {
-      qtd_min_total,
-      qtd_total,
       total_geral,
-      economia_total,
-      valor_minimo_pedido
+      economia_total
     };
   }, [orderData, selectedItems]);
 

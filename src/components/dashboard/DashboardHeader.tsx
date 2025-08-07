@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Download, FileText, Settings, Send, X } from "lucide-react";
+import { Send } from "lucide-react";
+
+import { OrderItem } from "../../types/order";
 
 interface DashboardHeaderProps {
   onExportCSV: () => void;
@@ -8,8 +10,7 @@ interface DashboardHeaderProps {
   onSaveOrder: () => void;
   onSendOrder: () => void;
   onClose: () => void;
-  totalValue: number;
-  minOrderValue: number;
+  selectedItems: OrderItem[];
 }
 
 export const DashboardHeader = ({
@@ -19,10 +20,9 @@ export const DashboardHeader = ({
   onSaveOrder,
   onSendOrder,
   onClose,
-  totalValue,
-  minOrderValue
+  selectedItems
 }: DashboardHeaderProps) => {
-  const canSendOrder = totalValue >= minOrderValue;
+  const totalValue = selectedItems.reduce((sum, item) => sum + item.total, 0);
 
   return (
     <div className="bg-gradient-header p-6 rounded-t-lg shadow-card">
@@ -32,26 +32,19 @@ export const DashboardHeader = ({
         </h1>
       </div>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex justify-end">
         <Button
           variant="action-green"
           onClick={onSendOrder}
-          disabled={!canSendOrder}
           className="text-sm"
-          title={!canSendOrder ? `Valor mínimo do pedido: R$ ${minOrderValue.toFixed(2)}` : ''}
         >
-          <Send className="h-4 w-4" />
-          Enviar Pedido
+          <Send className="h-4 w-4 mr-2" />
+          {selectedItems.length > 0 
+            ? `Enviar Pedido (R$ ${totalValue.toFixed(2)})`
+            : 'Enviar Pedido'
+          }
         </Button>
       </div>
-
-      {!canSendOrder && (
-        <div className="mt-4 p-3 bg-warning/10 border border-warning/30 rounded-md">
-          <p className="text-sm text-warning-foreground">
-            <strong>Atenção:</strong> Valor atual do pedido (R$ {totalValue.toFixed(2)}) é menor que o valor mínimo (R$ {minOrderValue.toFixed(2)})
-          </p>
-        </div>
-      )}
     </div>
   );
 };

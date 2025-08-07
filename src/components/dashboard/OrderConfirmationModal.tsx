@@ -7,23 +7,34 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { OrderSummary } from "../../types/order";
+import { OrderItem } from "../../types/order";
 
 interface OrderConfirmationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
-  summary: OrderSummary;
-  selectedItemsCount: number;
+  selectedItems: OrderItem[];
 }
 
 export const OrderConfirmationModal = ({
   open,
   onOpenChange,
   onConfirm,
-  summary,
-  selectedItemsCount
+  selectedItems
 }: OrderConfirmationModalProps) => {
+  const groupedItems = selectedItems.reduce((acc, item) => {
+    const key = item.tabela_cod;
+    if (!acc[key]) {
+      acc[key] = {
+        items: [],
+        total: 0,
+        tabela: item.tabela
+      };
+    }
+    acc[key].items.push(item);
+    acc[key].total += item.total;
+    return acc;
+  }, {} as Record<string, { items: OrderItem[]; total: number; tabela: string }>);
   const handleConfirm = () => {
     onConfirm();
     onOpenChange(false);
@@ -42,44 +53,32 @@ export const OrderConfirmationModal = ({
         </DialogHeader>
 
         <div className="space-y-4 py-4">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-6">
             <span className="text-sm font-medium">Itens selecionados:</span>
-            <span className="font-bold">{selectedItemsCount}</span>
+            <span className="font-bold">{selectedItems.length}</span>
           </div>
 
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Quantidade total:</span>
-            <span className="font-bold">{summary.qtd_total.toLocaleString()}</span>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Valor total:</span>
-            <span className="font-bold text-primary">
-              R$ {summary.total_geral.toFixed(2)}
-            </span>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Economia:</span>
-            <span className="font-bold text-success">
-              R$ {summary.economia_total.toFixed(2)}
-            </span>
-          </div>
-
-          <div className="border-t pt-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Status do pedido:</span>
-              <span className={`font-bold ${
-                summary.total_geral >= summary.valor_minimo_pedido
-                  ? 'text-success'
-                  : 'text-warning'
-              }`}>
-                {summary.total_geral >= summary.valor_minimo_pedido
-                  ? '✓ Aprovado'
-                  : '⚠ Valor mínimo não atingido'
-                }
-              </span>
-            </div>
+          <div className="space-y-6">
+            {Object.entries(groupedItems).map(([tabelaCod, group]) => (
+              <div key={tabelaCod} className="space-y-2">
+                <div className="flex justify-between items-center border-b pb-2">
+                  <div>
+                    <span className="font-medium">{group.tabela}</span>
+                    <span className="text-sm text-muted-foreground ml-2">(Cód: {tabelaCod})</span>
+                  </div>
+                  <span className="font-bold text-primary">
+                    R$ {group.total.toFixed(2)}
+                  </span>
+                </div>
+                
+                {group.items.map((item) => (
+                  <div key={item.id} className="flex justify-between items-center text-sm pl-4">
+                    <span className="text-muted-foreground">{item.produto}</span>
+                    <span>R$ {item.total.toFixed(2)}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -93,7 +92,6 @@ export const OrderConfirmationModal = ({
           <Button
             variant="action-green"
             onClick={handleConfirm}
-            disabled={summary.total_geral < summary.valor_minimo_pedido}
           >
             Confirmar Envio
           </Button>

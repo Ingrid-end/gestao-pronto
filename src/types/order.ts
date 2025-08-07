@@ -23,11 +23,8 @@ export interface OrderItem {
 }
 
 export interface OrderSummary {
-  qtd_min_total: number;
-  qtd_total: number;
   total_geral: number;
   economia_total: number;
-  valor_minimo_pedido: number;
 }
 
 export interface ColumnFilter {
