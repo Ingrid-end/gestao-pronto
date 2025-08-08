@@ -26,24 +26,26 @@ export const DashboardHeader = ({
 
   return (
     <div className="bg-gradient-header p-6 rounded-t-lg shadow-card">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-dashboard-header-foreground">
-          Aprovação de Pedidos por Email
-        </h1>
-      </div>
-
-      <div className="flex justify-end">
-        <Button
-          variant="action-green"
-          onClick={onSendOrder}
-          className="text-sm"
-        >
-          <Send className="h-4 w-4 mr-2" />
-          {selectedItems.length > 0 
-            ? `Enviar Pedido (R$ ${totalValue.toFixed(2)})`
-            : 'Enviar Pedido'
-          }
-        </Button>
+      <div className="flex items-center justify-between">
+        <div className="flex-1 flex justify-center">
+          <h1 className="text-2xl font-bold text-dashboard-header-foreground">
+            Aprovação de Pedidos por Email
+          </h1>
+        </div>
+        
+        <div>
+          <Button
+            variant="action-green"
+            onClick={onSendOrder}
+            className="text-sm"
+          >
+            <Send className="h-4 w-4 mr-2" />
+            {selectedItems.length > 0 
+              ? `Enviar Pedido (R$ ${totalValue.toFixed(2)})`
+              : 'Enviar Pedido'
+            }
+          </Button>
+        </div>
       </div>
     </div>
   );

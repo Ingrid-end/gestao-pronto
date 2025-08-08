@@ -34,7 +34,7 @@ export const useOrderData = () => {
     }
 
     const headers = [
-      'UF', 'CD', 'Nome CD', 'Cond. Com', 'Fabricante', 'Tabela Cod', 'Tabela',
+      'UF', 'CD', 'Nome CD', 'Fabricante', 'Tabela Cod', 'Tabela',
       'Tipo Envio', 'E-mail', 'Cód Prod', 'EAN', 'Produto', 'Preço Bruto',
       'Desconto (%)', 'Preço Líquido', 'Estoque', 'Qtd. Mínima', 'Qtd. Comprada', 'Total'
     ];
@@ -42,7 +42,7 @@ export const useOrderData = () => {
     const csvContent = [
       headers.join(','),
       ...selectedData.map(item => [
-        item.uf, item.cd, `"${item.nome_cd}"`, item.cond_com, item.fabricante,
+        item.uf, item.cd, `"${item.nome_cd}"`, item.fabricante,
         item.tabela_cod, item.tabela, item.tipo_envio, item.email, item.cod_prod,
         item.ean, `"${item.produto}"`, item.preco_bruto, item.desconto,
         item.preco_liquido, item.estoque, item.qtd_minima, item.qtd_comprada, item.total

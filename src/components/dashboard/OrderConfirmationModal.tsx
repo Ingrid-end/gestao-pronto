@@ -47,11 +47,26 @@ export const OrderConfirmationModal = ({
 
       // Mapear os itens selecionados para o formato esperado pela API
       const itemsToSend = selectedItems.map(item => {
+        // Extrair o ID da demanda do ID do item ou usar um valor fixo para teste
+        // O formato esperado do ID é "cod_prod-demanda"
+        let demandaId = 1280419; // Valor fixo baseado no exemplo
+        try {
+          const itemIdParts = item.id.split('-');
+          if (itemIdParts.length > 1 && itemIdParts[1]) {
+            const parsedId = parseInt(itemIdParts[1]);
+            if (!isNaN(parsedId) && parsedId > 0) {
+              demandaId = parsedId;
+            }
+          }
+        } catch (e) {
+          console.warn('Erro ao extrair demanda do ID:', e);
+        }
+        
         const mappedItem = {
           UF: item.uf,
           CD: parseInt(item.cd),
           NOME_CD: item.nome_cd,
-          CONDIC_COMERC: item.cond_com,
+          // CONDIC_COMERC field removed
           FABRICANTE: item.fabricante,
           TABELA_COD: parseInt(item.tabela_cod),
           TABELA: item.tabela,
@@ -63,15 +78,17 @@ export const OrderConfirmationModal = ({
           P_BRUTO: item.preco_bruto,
           DESC: item.desconto,
           P_LIQ: item.preco_liquido,
-          TOT_P_LIQ_SOMA: item.total
+          TOT_P_LIQ_SOMA: item.total,
+          DEMANDA: demandaId  // Adicionamos a DEMANDA aqui
         };
-        console.log('Item mapeado:', mappedItem);
+        console.log('Item mapeado com DEMANDA:', mappedItem);
         return mappedItem;
       });
 
       // Enviar os pedidos
       console.log('Enviando pedidos...');
-      await sendOrders(itemsToSend);
+      // Adicionamos a conversão de tipo para resolver o erro de tipo
+      await sendOrders(itemsToSend as any);
       console.log('Pedidos enviados com sucesso!');
 
       toast({

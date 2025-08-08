@@ -3,10 +3,12 @@ import { OrderItem, ColumnFilter, SortConfig } from "../../types/order";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ChevronUp, ChevronDown, Search, Loader2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { fetchOrders, type ApiOrderItem } from "@/services/api";
+import { ChevronUp, ChevronDown, Search, Loader2, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { cn, formatDateToPtBR, formatDateToYYYYMMDD, parseYYYYMMDDToDate, formatCNPJ, applyCNPJMask } from "@/lib/utils";
+import { fetchOrders, type ApiOrderItem, OrderFilterParams } from "@/services/api";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 interface OrderTableProps {
   data: OrderItem[];
@@ -26,33 +28,71 @@ export const OrderTable = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [orders, setOrders] = useState<OrderItem[]>([]);
+  const { toast } = useToast();
+  
+  // Paginação
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+  
+  // Filtro de data - usando período com data inicial e data final
+  const today = formatDateToYYYYMMDD(new Date());
+  const [dateFrom, setDateFrom] = useState<string>(today);
+  const [dateTo, setDateTo] = useState<string>(today);
+  
+  // Formato de data para o input - YYYY-MM-DD para o elemento HTML input type="date"
+  const formatDateForInput = (date: Date) => {
+    // Ensure valid date
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      return '';
+    }
+    
+    // Format as YYYY-MM-DD for the HTML date input
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
 
   useEffect(() => {
     const loadOrders = async () => {
       try {
         setIsLoading(true);
         setError(null);
-        const response = await fetchOrders();
+        
+        // Preparar parâmetros para a chamada da API
+        const params: OrderFilterParams = {
+          page: currentPage,
+          pageSize: pageSize
+        };
+        
+        // Adicionar filtros de data (período)
+        params.dateFrom = dateFrom;
+        params.dateTo = dateTo;
+        
+        const response = await fetchOrders(params);
+        
+        // Atualizar o contador total de itens para a paginação
+        setTotalItems(response['@odata.count'] || response.value.length);
         
         // Map API data to OrderItem format
         const mappedOrders = response.value.map((item: ApiOrderItem, index: number) => ({
           id: `${item.COD_PROD}-${index}`,
           uf: item.UF,
           cd: item.CD.toString(),
-          nome_cd: item.NOME_CD,
-          cond_com: item.CONDIC_COMERC,
-          fabricante: item.FABRICANTE,
-          tabela_cod: item.TABELA_COD.toString(),
+          loja: item.LOJA,
+          cnpj: item.CNPJ,
           tabela: item.TABELA,
-          tipo_envio: item.TIPO_ENVIO,
-          email: item.EMAIL,
-          cod_prod: item.COD_PROD.toString(),
+          demanda: item.DEMANDA,
           ean: item.EAN,
           produto: item.PROD,
           preco_bruto: item.P_BRUTO,
           desconto: item.DESC,
-          preco_liquido: item.P_LIQ,
-          total: item.TOT_P_LIQ_SOMA
+          total: item.TOT_P_LIQ_SOMA,
+          qtd_comprada: item.QTD || 0,
+          preco_liquido: item.P_LIQ || 0,
+          // Ensure date is properly formatted as YYYY-MM-DD
+          data: typeof item.DATA === 'string' ? item.DATA.split('T')[0] : formatDateToYYYYMMDD(new Date(item.DATA))
         }));
 
         setOrders(mappedOrders);
@@ -66,32 +106,37 @@ export const OrderTable = ({
     };
 
     loadOrders();
-  }, [onDataChange]);
+  }, [onDataChange, currentPage, pageSize, dateFrom, dateTo]);
 
   // Colunas da tabela
   const columns = [
-    { key: 'uf', label: 'UF', width: 'w-16' },
-    { key: 'cd', label: 'CD', width: 'w-20' },
-    { key: 'nome_cd', label: 'Nome CD', width: 'w-48' },
-    { key: 'cond_com', label: 'Cond. Com', width: 'w-24' },
-    { key: 'fabricante', label: 'Fabricante', width: 'w-32' },
-    { key: 'tabela_cod', label: 'Tabela Cod', width: 'w-24' },
-    { key: 'tabela', label: 'Tabela', width: 'w-32' },
-    { key: 'tipo_envio', label: 'Tipo Envio', width: 'w-24' },
-    { key: 'email', label: 'E-mail', width: 'w-48' },
-    { key: 'cod_prod', label: 'Cód Prod', width: 'w-24' },
-    { key: 'ean', label: 'EAN', width: 'w-32' },
-    { key: 'produto', label: 'Produto', width: 'w-32' },
-    { key: 'preco_bruto', label: 'Preço Bruto', width: 'w-28', type: 'currency' },
-    { key: 'desconto', label: 'Desconto (%)', width: 'w-28', type: 'percent' },
-    { key: 'preco_liquido', label: 'Preço Líquido', width: 'w-28', type: 'currency' },
-    { key: 'total', label: 'Total', width: 'w-28', type: 'currency' }
+    { key: 'demanda', label: 'Demanda', width: 'min-w-[100px] whitespace-nowrap', type: 'raw-number' },
+    { key: 'data', label: 'Data', width: 'min-w-[120px] whitespace-nowrap', type: 'date' },
+    { key: 'uf', label: 'UF', width: 'min-w-[80px] whitespace-nowrap' },
+    { key: 'cd', label: 'CD', width: 'min-w-[80px] whitespace-nowrap' },
+    { key: 'loja', label: 'Loja', width: 'min-w-[250px]' },
+    { key: 'cnpj', label: 'CNPJ', width: 'min-w-[180px] whitespace-nowrap' },
+    { key: 'tabela', label: 'Tabela', width: 'min-w-[300px]' },
+    { key: 'ean', label: 'EAN', width: 'min-w-[150px] whitespace-nowrap' },
+    { key: 'produto', label: 'Produto', width: 'min-w-[300px]' },
+    { key: 'preco_bruto', label: 'Preço Bruto', width: 'min-w-[150px] whitespace-nowrap', type: 'currency' },
+    { key: 'desconto', label: 'Desconto (%)', width: 'min-w-[150px] whitespace-nowrap', type: 'percent' },
+    { key: 'qtd_comprada', label: 'Quantidade', width: 'min-w-[130px] whitespace-nowrap', type: 'number' },
+    { key: 'total', label: 'Total', width: 'min-w-[150px] whitespace-nowrap', type: 'currency' }
   ];
 
   // Filtrar dados
   const filteredData = orders.filter(item => {
     return Object.entries(filters).every(([key, value]) => {
       if (!value) return true;
+      
+      // Tratamento especial para o CNPJ - comparar ignorando formatação
+      if (key === 'cnpj') {
+        const itemCNPJ = String(item[key as keyof OrderItem]).replace(/\D/g, '');
+        const filterCNPJ = value.replace(/\D/g, '');
+        return itemCNPJ.includes(filterCNPJ);
+      }
+      
       const itemValue = String(item[key as keyof OrderItem]).toLowerCase();
       return itemValue.includes(value.toLowerCase());
     });
@@ -160,49 +205,209 @@ export const OrderTable = ({
       case 'percent':
         return `${Number(value).toFixed(1)}%`;
       case 'number':
-        return Number(value).toLocaleString();
+        return value !== undefined && value !== null ? Number(value).toLocaleString() : '-';
+      case 'raw-number':
+        // Return the number as is, without any formatting
+        return value !== undefined && value !== null ? String(value) : '-';
+      case 'date':
+        // Handle date format from API and display in Brazilian format (DD/MM/YYYY)
+        if (!value) return '-';
+        // Use the utility function to format the date
+        return formatDateToPtBR(value);
       default:
+        // Format CNPJ if the value looks like a CNPJ
+        if (typeof value === 'string' && value.length > 8 && value.includes('/')) {
+          return formatCNPJ(value);
+        }
         return String(value);
     }
   };
+  
+  // Manipular mudança de página
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+  
+  // Manipular mudança de tamanho da página
+  const handlePageSizeChange = (newSize: string) => {
+    setPageSize(Number(newSize));
+    setCurrentPage(1); // Resetar para a primeira página quando mudar o tamanho
+  };
+  
+  // Manipular mudança no filtro de data
+  const handleDateFilterChange = () => {
+    // Validar datas
+    const fromDate = new Date(dateFrom);
+    const toDate = new Date(dateTo);
+    
+    if (isNaN(fromDate.getTime()) || isNaN(toDate.getTime())) {
+      toast({
+        title: "Erro no filtro de data",
+        description: "Por favor, verifique as datas selecionadas.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (fromDate > toDate) {
+      toast({
+        title: "Erro no filtro de data",
+        description: "A data inicial não pode ser posterior à data final.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setCurrentPage(1); // Resetar para a primeira página quando aplicar filtro
+  };
+  
+  // Calcular total de páginas
+  const totalPages = Math.ceil(totalItems / pageSize);
 
   const allSelected = sortedData.length > 0 && selectedItems.length === sortedData.length;
   const someSelected = selectedItems.length > 0 && selectedItems.length < sortedData.length;
 
   return (
-    <div className="bg-card rounded-lg shadow-card">
-      {/* Controles da tabela */}
+    <div className="bg-card rounded-lg shadow-card w-full max-w-full overflow-hidden">
+      {/* Cabeçalho da tabela - dois containers lado a lado */}
       <div className="p-4 border-b border-border">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-card-foreground">
-            Itens do Pedido ({sortedData.length})
-          </h2>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <Search className="h-4 w-4" />
-            {showFilters ? 'Ocultar Filtros' : 'Mostrar Filtros'}
-          </Button>
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4 gap-4">
+          {/* Container da esquerda - filtro de data alinhado à esquerda */}
+          <div className="w-full md:flex-1 justify-start">
+            {/* Filtro de data permanente - formato brasileiro */}
+            <div className="flex flex-wrap gap-2 items-center">
+              <div className="flex flex-col w-full sm:w-auto">
+                <label className="text-xs text-muted-foreground mb-1">Filtro por Data</label>
+                <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-col">
+                    <label className="text-xs text-muted-foreground mb-1">Data Inicial</label>
+                    <Input
+                      type="date"
+                      value={dateFrom}
+                      onChange={(e) => setDateFrom(e.target.value)}
+                      className="h-8 text-xs w-32"
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col">
+                    <label className="text-xs text-muted-foreground mb-1">Data Final</label>
+                    <Input
+                      type="date"
+                      value={dateTo}
+                      onChange={(e) => setDateTo(e.target.value)}
+                      className="h-8 text-xs w-32"
+                    />
+                  </div>
+                  
+                  <div className="flex flex-col">
+                    <label className="text-xs text-muted-foreground mb-1">&nbsp;</label>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={handleDateFilterChange}
+                        className="h-8"
+                      >
+                        <Search className="h-4 w-4 mr-1" />
+                        Filtrar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Container da direita - espaço vazio */}
+          <div className="w-full md:w-auto flex items-end justify-end mt-4 md:mt-0">
+            {/* Botão de mostrar/ocultar filtros */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowFilters(!showFilters)}
+              className="h-8 px-4 w-full md:w-auto"
+            >
+              <Search className="h-4 w-4 mr-2" />
+              {showFilters ? 'Ocultar Filtros Avançados' : 'Mostrar Filtros Avançados'}
+            </Button>
+          </div>
         </div>
+        
 
         {/* Filtros */}
         {showFilters && (
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
-            {columns.slice(0, 12).map(column => (
-              <div key={column.key}>
-                <label className="text-xs text-muted-foreground mb-1 block">
-                  {column.label}
-                </label>
-                <Input
-                  placeholder={`Filtrar ${column.label}`}
-                  value={filters[column.key] || ''}
-                  onChange={(e) => handleFilterChange(column.key, e.target.value)}
-                  className="h-8 text-xs"
-                />
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
+            {/* Mostrar apenas os filtros que queremos - filtros personalizados */}
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                UF
+              </label>
+              <Input
+                placeholder="Filtrar UF"
+                value={filters['uf'] || ''}
+                onChange={(e) => handleFilterChange('uf', e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                Loja
+              </label>
+              <Input
+                placeholder="Filtrar Loja"
+                value={filters['loja'] || ''}
+                onChange={(e) => handleFilterChange('loja', e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                CNPJ
+              </label>
+              <Input
+                placeholder="Filtrar CNPJ (XX.XXX.XXX/XXXX-XX)"
+                value={filters['cnpj'] || ''}
+                onChange={(e) => {
+                  // Apply CNPJ mask while preserving filter functionality
+                  const maskedValue = applyCNPJMask(e.target.value);
+                  handleFilterChange('cnpj', maskedValue);
+                }}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                Tabela
+              </label>
+              <Input
+                placeholder="Filtrar Tabela"
+                value={filters['tabela'] || ''}
+                onChange={(e) => handleFilterChange('tabela', e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                EAN
+              </label>
+              <Input
+                placeholder="Filtrar EAN"
+                value={filters['ean'] || ''}
+                onChange={(e) => handleFilterChange('ean', e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                Produto
+              </label>
+              <Input
+                placeholder="Filtrar Produto"
+                value={filters['produto'] || ''}
+                onChange={(e) => handleFilterChange('produto', e.target.value)}
+                className="h-9 text-sm"
+              />
+            </div>
           </div>
         )}
       </div>
@@ -221,12 +426,12 @@ export const OrderTable = ({
       )}
 
       {/* Tabela */}
-      <div className="overflow-x-auto">
-        <table className="w-full">
+      <div className="responsive-table-container">
+        <table className="w-full border-collapse">
           {/* Header */}
           <thead className="bg-table-header">
             <tr>
-              <th className="p-3 text-left w-12">
+              <th className="p-2 text-left w-12">
                 <Checkbox
                   checked={allSelected}
                   onCheckedChange={handleSelectAll}
@@ -236,7 +441,7 @@ export const OrderTable = ({
                 <th
                   key={column.key}
                   className={cn(
-                    "p-3 text-left font-medium text-sm cursor-pointer hover:bg-table-row-hover transition-colors",
+                    "p-2 text-left font-medium text-sm cursor-pointer hover:bg-table-row-hover transition-colors",
                     column.width
                   )}
                   onClick={() => handleSort(column.key as keyof OrderItem)}
@@ -251,8 +456,6 @@ export const OrderTable = ({
                   </div>
                 </th>
               ))}
-              {/* Remover coluna de ações */}
-              {/* <th className="p-3 text-left w-28">Ações</th> */}
             </tr>
           </thead>
 
@@ -264,13 +467,13 @@ export const OrderTable = ({
                 <tr
                   key={item.id}
                   className={cn(
-                    "border-b border-border transition-colors",
+                    "border-b border-border transition-colors h-10",
                     index % 2 === 0 ? "bg-table-row-even" : "bg-table-row-odd",
                     isSelected && "bg-table-row-selected",
                     "hover:bg-table-row-hover"
                   )}
                 >
-                  <td className="p-3">
+                  <td className="p-2">
                     <Checkbox
                       checked={isSelected}
                       onCheckedChange={(checked) => handleSelectItem(item.id, !!checked)}
@@ -279,21 +482,21 @@ export const OrderTable = ({
                   {columns.map(column => (
                     <td
                       key={column.key}
-                      className={cn("p-3 text-sm", column.width)}
+                      className={cn("p-2 text-sm align-middle", column.width)}
                     >
-                      {formatValue(item[column.key as keyof OrderItem], column.type)}
+                      {column.key === 'qtd_comprada' ? (
+                        <div className="px-1 py-0.5">
+                          {formatValue(item.qtd_comprada || 0, 'number')}
+                        </div>
+                      ) : column.key === 'cnpj' ? (
+                        formatCNPJ(String(item.cnpj))
+                      ) : column.key === 'demanda' ? (
+                        String(item.demanda) // Display the demanda value without any formatting
+                      ) : (
+                        formatValue(item[column.key as keyof OrderItem], column.type)
+                      )}
                     </td>
                   ))}
-                  {/* Remover célula de ações */}
-                  {/* <td className="p-3">
-                    <Input
-                      type="number"
-                      min="0"
-                      value={item.qtd_comprada}
-                      onChange={(e) => handleQuantityChange(item.id, Number(e.target.value))}
-                      className="w-20 h-8 text-xs"
-                    />
-                  </td> */}
                 </tr>
               );
             })}
@@ -301,11 +504,91 @@ export const OrderTable = ({
         </table>
       </div>
 
-      {sortedData.length === 0 && (
+      {sortedData.length === 0 && !isLoading && (
         <div className="text-center py-8 text-muted-foreground">
           Nenhum item encontrado com os filtros aplicados
         </div>
       )}
+      
+      {/* Controles de paginação */}
+      <div className="p-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+          <span className="text-xs text-muted-foreground text-center sm:text-left">
+            Mostrando {sortedData.length ? (currentPage - 1) * pageSize + 1 : 0} - {Math.min(currentPage * pageSize, totalItems)} de {totalItems} itens
+          </span>
+          
+          <Select
+            value={String(pageSize)}
+            onValueChange={handlePageSizeChange}
+          >
+            <SelectTrigger className="h-8 text-xs w-24 mt-2 sm:mt-0">
+              <SelectValue placeholder="Itens por página" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10 itens</SelectItem>
+              <SelectItem value="25">25 itens</SelectItem>
+              <SelectItem value="50">50 itens</SelectItem>
+              <SelectItem value="100">100 itens</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <span className="text-xs text-muted-foreground italic hidden md:inline-block">
+            Paginação e filtros via parâmetros de URL
+          </span>
+        </div>
+        
+        <div className="flex items-center justify-center sm:justify-end gap-1 w-full sm:w-auto mt-2 sm:mt-0">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+            className="h-8 w-8 p-0"
+          >
+            <span className="sr-only">Primeira página</span>
+            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 -ml-2" />
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="h-8 w-8 p-0"
+          >
+            <span className="sr-only">Página anterior</span>
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          
+          <span className="text-xs px-2">
+            Página {currentPage} de {totalPages || 1}
+          </span>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage >= totalPages}
+            className="h-8 w-8 p-0"
+          >
+            <span className="sr-only">Próxima página</span>
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage >= totalPages}
+            className="h-8 w-8 p-0"
+          >
+            <span className="sr-only">Última página</span>
+            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 -ml-2" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

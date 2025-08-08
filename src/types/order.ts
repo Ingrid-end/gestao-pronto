@@ -2,23 +2,20 @@ export interface OrderItem {
   id: string;
   uf: string;
   cd: string;
-  nome_cd: string;
-  cond_com: string;
-  fabricante: string;
-  tabela_cod: string;
+  loja: string;
+  cnpj: string;
   tabela: string;
-  tipo_envio: string;
-  email: string;
-  cod_prod: string;
+  demanda: number;
   ean: string;
   produto: string;
   preco_bruto: number;
   desconto: number;
-  preco_liquido: number;
-  estoque: number;
-  qtd_minima: number;
-  qtd_comprada: number;
   total: number;
+  data: string;
+  estoque?: number;
+  qtd_minima?: number;
+  qtd_comprada?: number;
+  preco_liquido?: number;
   selected?: boolean;
 }
 

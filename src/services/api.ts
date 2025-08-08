@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 
-export const localToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzQTk0RkM4MTg4Qzg3NkE5Njk2Mzg1QjU4NTUxQzg4OTYxNDE0RDdSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IlU2bFB5QmlNaDJxV2xqaGJXRlVjaUpZVUZOYyJ9.eyJuYmYiOjE3NTQ2MDA2NTEsImV4cCI6MTc1NDYwNDI1MSwiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvc21vc3Byby5jb20uYnIiLCJhdWQiOiJodHRwczovL2F1dGguY29zbW9zcHJvLmNvbS5ici9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJKYXZhc2NyaXB0Q2xpZW50Iiwic3ViIjoiMTU3NjAxIiwiYXV0aF90aW1lIjoxNzU0NjAwNjQ0LCJpZHAiOiJsb2NhbCIsIkxvZ2luU2Vzc2lvbklEIjoiNWU4NjZjNjEtYzk5Yi00NzhjLWI1MjgtMjU5OTdlYzZlNTM3IiwiTmFtZSI6ImFkbWluQHJlZGVub3NzYWZhcm1hLmNvbS5iciIsIkZyaWVuZGx5TmFtZSI6IkFkbWluaXN0cmFkb3IgLSBOb3NzYSBGYXJtYSIsIlByb2ZpbGUiOiIxIiwiSm9iUm9sZSI6IjYiLCJJbml0aWFscyI6IkFGIiwiVXNlcklkZW50aWZpY2F0aW9uQ2hhdCI6IlRJZC0xMDE1NDpVSWQtMTU3NjAxIiwiVXNlckNoYXRTaWduYXR1cmUiOiIyMzM1MzkxNGZlYWU5MDhhNGY0MmE0Mzc4NDJkOTc0YmFhMDllZDRhYTgwMTQ5Y2I3YTIwOWFhYTBiMmI3MDlkIiwiV2Vla2VuZFNjYWxlIjoiMSIsIlVzZXJQaWN0dXJlIjoiYjY2ZTc3YjktNzVjMS00YTM2LTlkNDItN2M5NjdlMjhmMmYwLnBuZyIsInJvbGUiOiJhZG1pbiIsIlRlbmFudElkIjoiMTAxNTQiLCJMb2dvIjoiMjk3YWM0MjAtM2M2Ny00NDMxLWFmZDUtNTg3MmEwYjBkMGY2LnBuZyIsIkljb24iOiIiLCJCYWNrZ3JvdW5kSW1hZ2UiOiIiLCJNYWluQ29sb3IiOiIjM2M0Y2NjIiwiRm9udENvbG9yIjoiI2ZmZmZmZiIsIlRlbmFudE5hbWUiOiJOb3NzYSBGYXJtYSIsIlRlbmFudEtleSI6IlJORiIsIkJyYW5jaCI6IiIsIkVtYWlsIjoiYWRtaW5AcmVkZW5vc3NhZmFybWEuY29tLmJyIiwiVGVuYW50RG9tYWluIjoicmVkZW5vc3NhZmFybWEiLCJBc3NvY2lhdGVkVGVuYW50cyI6WyJyZWRlbm9zc2FmYXJtYSJdLCJUZW5hbnRNaWdyYXRlZCI6IlRydWUiLCJqdGkiOiJENkVFRkM1ODRGNzhGMzVDMEY3QzY2MkI3RUUwOTE2MiIsInNpZCI6IjI3M0MwRkE0QTg4MDkzNTIwOEUyOTU4NjcyMEVEMzdEIiwiaWF0IjoxNzU0NjAwNjUxLCJzY29wZSI6WyJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJXRUJBUElQT1JUQUwiLCJDb3Ntb3NQcm9XZWJBcGkiLCJJZGVudGl0eVNlcnZlckFwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.byaRn8K07unD3wjGG-wbp99NUbzS1OdOTP_DXTQY8dHqljdERXBiz9IHunZWOD9SVAar1a2JYk2PUE_PKJ-bSIxj8js6OnN1Ms_r7sUE8zEwcRJptroWHitMt4OPUUiYyEX-VoUx5ZCuMv5heI62oq8f0tK0q7Ku1HN82HTw2Q6wY3vg3-rXNpYWhPkWK7nC3wZl5OGhkaVeZVTWjJ9HCfAF6VFiL9ELInrR3Bj-OHPsc4mnG5AMfZEX9Rs4k962qy_PRWQpdU76KSLjD1UjCQinN5woexTpeTisHa9Epq9GSPGQFob8ORt8_pFUa5-M4z1XS5hgSnmRUn3jg7XCEQ";
+export const localToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzQTk0RkM4MTg4Qzg3NkE5Njk2Mzg1QjU4NTUxQzg4OTYxNDE0RDdSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IlU2bFB5QmlNaDJxV2xqaGJXRlVjaUpZVUZOYyJ9.eyJuYmYiOjE3NTQ2ODQ2ODcsImV4cCI6MTc1NDY4ODI4NywiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvc21vc3Byby5jb20uYnIiLCJhdWQiOiJodHRwczovL2F1dGguY29zbW9zcHJvLmNvbS5ici9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJKYXZhc2NyaXB0Q2xpZW50Iiwic3ViIjoiMTU3NjAxIiwiYXV0aF90aW1lIjoxNzU0NjU1OTM1LCJpZHAiOiJsb2NhbCIsIkxvZ2luU2Vzc2lvbklEIjoiNzFlNWQzZGYtMDliNi00YTViLTk3MjctMmQ2ZTI5YzE3M2Y4IiwiTmFtZSI6ImFkbWluQHJlZGVub3NzYWZhcm1hLmNvbS5iciIsIkZyaWVuZGx5TmFtZSI6IkFkbWluaXN0cmFkb3IgLSBOb3NzYSBGYXJtYSIsIlByb2ZpbGUiOiIxIiwiSm9iUm9sZSI6IjYiLCJJbml0aWFscyI6IkFGIiwiVXNlcklkZW50aWZpY2F0aW9uQ2hhdCI6IlRJZC0xMDE1NDpVSWQtMTU3NjAxIiwiVXNlckNoYXRTaWduYXR1cmUiOiIyMzM1MzkxNGZlYWU5MDhhNGY0MmE0Mzc4NDJkOTc0YmFhMDllZDRhYTgwMTQ5Y2I3YTIwOWFhYTBiMmI3MDlkIiwiV2Vla2VuZFNjYWxlIjoiMSIsIlVzZXJQaWN0dXJlIjoiYjY2ZTc3YjktNzVjMS00YTM2LTlkNDItN2M5NjdlMjhmMmYwLnBuZyIsInJvbGUiOiJhZG1pbiIsIlRlbmFudElkIjoiMTAxNTQiLCJMb2dvIjoiMjk3YWM0MjAtM2M2Ny00NDMxLWFmZDUtNTg3MmEwYjBkMGY2LnBuZyIsIkljb24iOiIiLCJCYWNrZ3JvdW5kSW1hZ2UiOiIiLCJNYWluQ29sb3IiOiIjM2M0Y2NjIiwiRm9udENvbG9yIjoiI2ZmZmZmZiIsIlRlbmFudE5hbWUiOiJOb3NzYSBGYXJtYSIsIlRlbmFudEtleSI6IlJORiIsIkJyYW5jaCI6IiIsIkVtYWlsIjoiYWRtaW5AcmVkZW5vc3NhZmFybWEuY29tLmJyIiwiVGVuYW50RG9tYWluIjoicmVkZW5vc3NhZmFybWEiLCJBc3NvY2lhdGVkVGVuYW50cyI6WyJyZWRlbm9zc2FmYXJtYSJdLCJUZW5hbnRNaWdyYXRlZCI6IlRydWUiLCJqdGkiOiJENjEwNDY5RjM3RjYyMUEyMDI2RDYyRDlBMTE1MDFBQSIsInNpZCI6IjgxMEZBNTdCMkIzQUExOTg0OTQzM0JGREUzQkI3NEQyIiwiaWF0IjoxNzU0Njg0Njg3LCJzY29wZSI6WyJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJXRUJBUElQT1JUQUwiLCJDb3Ntb3NQcm9XZWJBcGkiLCJJZGVudGl0eVNlcnZlckFwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.nlXaBFSVRAN040kga5NA3jzGXC33iK0Urx8EzHW38SUmYJexeByiggwFCFsufAXxkDGpfMKzekcLdKksLmkktEklHImq5QUFVhJGGNegPGPKuyK4eYoPhs0p7K9EIVyeyOiQ3IMvAN7Pm-_gsM-ZoZMYKY1WQHNGqsqoTusxLEtJrbLW__Zqmk3hbuBHmIXjhuFabQ7C2R4ce80Qo16p8PEFEbPPVHJEMekPuAWq26nvduse5n7slF0MH-pHblm2DxnH2VSLp8Gdxx9OMHX2A0huuprWBZaPwp14Fq6PZLMLp8tHiVtOvTCdW__Ug2jvrtrS9Zz14-f19dVeyJsPCA";
 
 // Função para verificar se está rodando localmente
 const isLocalhost = () => 
@@ -53,11 +53,17 @@ const createApi = (): AxiosInstance => {
 export const api = createApi();
 
 export interface ApiOrderItem {
+  USUARIO: string;
+  COD_USER: string;
+  DEMANDA: number;
+  DATA: string; // Format: YYYY-MM-DD
+  HORA: string;
+  LOJA: string;
+  ENTIDADE: string;
+  CNPJ: string;
   UF: string;
   CD: number;
-  NOME_CD: string;
-  CONDIC_COMERC: string;
-  FABRICANTE: string;
+  FORN: string;
   TABELA_COD: number;
   TABELA: string;
   TIPO_ENVIO: string;
@@ -65,11 +71,16 @@ export interface ApiOrderItem {
   COD_PROD: number;
   EAN: string;
   PROD: string;
+  FABRICANTE: string;
+  QTD: number;
   P_BRUTO: number;
   P_BRUTO_SOMA: number;
   DESC: number;
   P_LIQ: number;
   TOT_P_LIQ_SOMA: number;
+  COD_COMPRADOR: string;
+  CARGO: string;
+  NOME_CD: string;
 }
 
 export interface OrderResponse {
@@ -78,14 +89,67 @@ export interface OrderResponse {
   value: ApiOrderItem[];
 }
 
-export const fetchOrders = async (): Promise<OrderResponse> => {
+export interface OrderFilterParams {
+  dateFrom?: string;
+  dateTo?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export const fetchOrders = async (params?: OrderFilterParams): Promise<OrderResponse> => {
   try {
-    const response = await api.post('/odata/CustomViews(Name=\'Mmc_ListaPedidosEmail\')/ExecuteAndReceiveData()', {
-      Parameters: {
-        DATAINI: "01/08/2025",
-        DATAFIM: "01/08/2025"
+    // Construir a URL base
+    let url = '/odata/CustomViews(Name=\'Mmc_ListaPedidosEmail\')/ExecuteAndReceiveData()';
+    
+    // Adicionar parâmetros de paginação na URL
+    const urlParams: string[] = [];
+    
+    // Adicionar parâmetros de paginação na URL
+    if (params?.page !== undefined && params?.pageSize !== undefined) {
+      const skipValue = (params.page - 1) * params.pageSize;
+      urlParams.push(`$skip=${skipValue}`);
+      urlParams.push(`$top=${params.pageSize}`);
+    }
+    
+    // Adicionar os parâmetros à URL
+    if (urlParams.length > 0) {
+      url += '?' + urlParams.join('&');
+    }
+    
+    // Preparar os parâmetros para o body da requisição no formato correto
+    const bodyParams: any = {
+      Parameters: {}
+    };
+    
+    // Adicionar data inicial ao body se existir
+    if (params?.dateFrom) {
+      try {
+        bodyParams.Parameters.DATA_INI = params.dateFrom;
+      } catch (error) {
+        console.error('Erro ao formatar data inicial para filtro:', error);
       }
-    });
+    }
+    
+    // Adicionar data final ao body se existir
+    if (params?.dateTo) {
+      try {
+        bodyParams.Parameters.DATA_FIM = params.dateTo;
+      } catch (error) {
+        console.error('Erro ao formatar data final para filtro:', error);
+      }
+    }
+    
+    console.log('URL da requisição:', url);
+    console.log('Parâmetros de paginação:', urlParams);
+    console.log('Parâmetros de corpo:', bodyParams);
+    
+    // Fazer a chamada com os parâmetros no body
+    const response = await api.post(url, bodyParams);
+    
+    // Log da resposta para debug
+    if (response.data.value && response.data.value.length > 0) {
+      console.log('Formato da data na resposta:', response.data.value[0].DATA);
+    }
     
     return response.data;
   } catch (error) {
@@ -94,42 +158,99 @@ export const fetchOrders = async (): Promise<OrderResponse> => {
   }
 };
 
-// Interface para o envio dos itens selecionados
-interface SendOrderItem {
-  UF: string;
-  CD: number;
-  NOME_CD: string;
-  CONDIC_COMERC: string;
-  FABRICANTE: string;
-  TABELA_COD: number;
-  TABELA: string;
-  TIPO_ENVIO: string;
-  EMAIL: string;
-  COD_PROD: number;
-  EAN: string;
-  PROD: string;
-  P_BRUTO: number;
-  DESC: number;
-  P_LIQ: number;
-  TOT_P_LIQ_SOMA: number;
+// Interfaces para o envio dos pedidos
+interface OrderProduct {
+  idProduto: number;
+}
+
+interface OrderRequest {
+  idDemanda: number;
+  produtos: OrderProduct[];
+}
+
+// Função para transformar os itens selecionados no formato da API
+const transformItemsToApiFormat = (items: ApiOrderItem[]): OrderRequest[] => {
+  if (!items || items.length === 0) {
+    console.warn('Nenhum item recebido para transformação');
+    return [];
+  }
+
+  console.log('Items recebidos para transformação:', JSON.stringify(items, null, 2));
+
+  // Agrupa os itens por demanda
+  const groupedByDemanda = items.reduce((acc, item) => {
+    // Log detalhado do item sendo processado
+    console.log('Processando item completo:', JSON.stringify(item, null, 2));
+
+    // Verifica apenas o produto, não mais a quantidade
+    if (item.DEMANDA === undefined || item.DEMANDA === null || !item.COD_PROD) {
+      console.warn('Item inválido. Valores:', {
+        demanda: item.DEMANDA,
+        codProd: item.COD_PROD
+      });
+      return acc;
+    }
+
+    const demandaGroup = acc.get(item.DEMANDA) || {
+      idDemanda: item.DEMANDA,
+      produtos: []
+    };
+
+    demandaGroup.produtos.push({
+      idProduto: item.COD_PROD
+    });
+
+    acc.set(item.DEMANDA, demandaGroup);
+    return acc;
+  }, new Map<number, OrderRequest>());
+
+  const result = Array.from(groupedByDemanda.values());
+  console.log('Dados transformados:', result);
+  return result;
+};
+
+interface ApiResponse {
+  status: string;
+  title: string;
 }
 
 // Função para enviar pedidos selecionados
-export const sendOrders = async (items: SendOrderItem[]): Promise<void> => {
+export const sendOrders = async (items: ApiOrderItem[]): Promise<void> => {
   try {
+    if (!items || items.length === 0) {
+      throw new Error('Nenhum item selecionado para envio');
+    }
+
     const token = getToken();
     console.log('Token atual:', token ? 'Present' : 'Missing');
-    console.log('Enviando pedidos:', items);
-    console.log('URL da requisição:', api.defaults.baseURL + '/odata/ExecuteCustomAction/ExecuteAction');
     
-    const response = await api.post('/odata/ExecuteCustomAction/MmcSalvaProdutosPedidos/ExecuteAction', {
-      Parameters: {
-        SelectedItems: items
-      }
-    });
+    const requestData = transformItemsToApiFormat(items);
+    if (requestData.length === 0) {
+      throw new Error('Nenhum item válido para envio');
+    }
+
+    console.log('Enviando pedidos:', requestData);
+    
+    // Envia diretamente o array de pedidos
+    console.log('Payload completo:', requestData);
+    
+    const response = await api.post('/api/ExecuteCustomAction/ExecuteAction?ActionName=Mmc_ListaPedidosEmail', requestData);
     console.log('Resposta da API:', response.data);
+
+    // Valida a resposta da API
+    const apiResponse = response.data as ApiResponse;
+    if (apiResponse.status !== 'success' || apiResponse.title !== 'sucesso') {
+      throw new Error('Resposta inválida da API: ' + (apiResponse.title || 'Erro desconhecido'));
+    }
   } catch (error: any) {
     console.error('Erro ao enviar pedidos:', error.response?.data || error);
-    throw error;
+    // Personaliza a mensagem de erro baseada na resposta da API ou no erro
+    let errorMessage = 'Erro ao enviar pedidos';
+    if (error.response?.data?.title) {
+      errorMessage = error.response.data.title;
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+    throw new Error(errorMessage);
   }
 };
