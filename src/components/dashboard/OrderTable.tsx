@@ -69,6 +69,11 @@ export const OrderTable = ({
         // Adicionar filtros de data (período)
         params.dateFrom = dateFrom;
         params.dateTo = dateTo;
+
+        // Adicionar filtro de demanda se existir
+        if (filters['demanda']) {
+          params.demanda = parseInt(filters['demanda']);
+        }
         
         const response = await fetchOrders(params);
         
@@ -106,7 +111,7 @@ export const OrderTable = ({
     };
 
     loadOrders();
-  }, [onDataChange, currentPage, pageSize, dateFrom, dateTo]);
+  }, [onDataChange, currentPage, pageSize, dateFrom, dateTo, filters['demanda']]);
 
   // Colunas da tabela
   const columns = [
@@ -338,6 +343,18 @@ export const OrderTable = ({
         {showFilters && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-4">
             {/* Mostrar apenas os filtros que queremos - filtros personalizados */}
+            <div>
+              <label className="text-xs text-muted-foreground mb-1 block">
+                Demanda
+              </label>
+              <Input
+                placeholder="Filtrar por Demanda"
+                value={filters['demanda'] || ''}
+                onChange={(e) => handleFilterChange('demanda', e.target.value)}
+                className="h-9 text-sm"
+                type="number"
+              />
+            </div>
             <div>
               <label className="text-xs text-muted-foreground mb-1 block">
                 UF

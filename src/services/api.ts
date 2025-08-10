@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 
-export const localToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzQTk0RkM4MTg4Qzg3NkE5Njk2Mzg1QjU4NTUxQzg4OTYxNDE0RDdSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IlU2bFB5QmlNaDJxV2xqaGJXRlVjaUpZVUZOYyJ9.eyJuYmYiOjE3NTQ2ODQ2ODcsImV4cCI6MTc1NDY4ODI4NywiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvc21vc3Byby5jb20uYnIiLCJhdWQiOiJodHRwczovL2F1dGguY29zbW9zcHJvLmNvbS5ici9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJKYXZhc2NyaXB0Q2xpZW50Iiwic3ViIjoiMTU3NjAxIiwiYXV0aF90aW1lIjoxNzU0NjU1OTM1LCJpZHAiOiJsb2NhbCIsIkxvZ2luU2Vzc2lvbklEIjoiNzFlNWQzZGYtMDliNi00YTViLTk3MjctMmQ2ZTI5YzE3M2Y4IiwiTmFtZSI6ImFkbWluQHJlZGVub3NzYWZhcm1hLmNvbS5iciIsIkZyaWVuZGx5TmFtZSI6IkFkbWluaXN0cmFkb3IgLSBOb3NzYSBGYXJtYSIsIlByb2ZpbGUiOiIxIiwiSm9iUm9sZSI6IjYiLCJJbml0aWFscyI6IkFGIiwiVXNlcklkZW50aWZpY2F0aW9uQ2hhdCI6IlRJZC0xMDE1NDpVSWQtMTU3NjAxIiwiVXNlckNoYXRTaWduYXR1cmUiOiIyMzM1MzkxNGZlYWU5MDhhNGY0MmE0Mzc4NDJkOTc0YmFhMDllZDRhYTgwMTQ5Y2I3YTIwOWFhYTBiMmI3MDlkIiwiV2Vla2VuZFNjYWxlIjoiMSIsIlVzZXJQaWN0dXJlIjoiYjY2ZTc3YjktNzVjMS00YTM2LTlkNDItN2M5NjdlMjhmMmYwLnBuZyIsInJvbGUiOiJhZG1pbiIsIlRlbmFudElkIjoiMTAxNTQiLCJMb2dvIjoiMjk3YWM0MjAtM2M2Ny00NDMxLWFmZDUtNTg3MmEwYjBkMGY2LnBuZyIsIkljb24iOiIiLCJCYWNrZ3JvdW5kSW1hZ2UiOiIiLCJNYWluQ29sb3IiOiIjM2M0Y2NjIiwiRm9udENvbG9yIjoiI2ZmZmZmZiIsIlRlbmFudE5hbWUiOiJOb3NzYSBGYXJtYSIsIlRlbmFudEtleSI6IlJORiIsIkJyYW5jaCI6IiIsIkVtYWlsIjoiYWRtaW5AcmVkZW5vc3NhZmFybWEuY29tLmJyIiwiVGVuYW50RG9tYWluIjoicmVkZW5vc3NhZmFybWEiLCJBc3NvY2lhdGVkVGVuYW50cyI6WyJyZWRlbm9zc2FmYXJtYSJdLCJUZW5hbnRNaWdyYXRlZCI6IlRydWUiLCJqdGkiOiJENjEwNDY5RjM3RjYyMUEyMDI2RDYyRDlBMTE1MDFBQSIsInNpZCI6IjgxMEZBNTdCMkIzQUExOTg0OTQzM0JGREUzQkI3NEQyIiwiaWF0IjoxNzU0Njg0Njg3LCJzY29wZSI6WyJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJXRUJBUElQT1JUQUwiLCJDb3Ntb3NQcm9XZWJBcGkiLCJJZGVudGl0eVNlcnZlckFwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.nlXaBFSVRAN040kga5NA3jzGXC33iK0Urx8EzHW38SUmYJexeByiggwFCFsufAXxkDGpfMKzekcLdKksLmkktEklHImq5QUFVhJGGNegPGPKuyK4eYoPhs0p7K9EIVyeyOiQ3IMvAN7Pm-_gsM-ZoZMYKY1WQHNGqsqoTusxLEtJrbLW__Zqmk3hbuBHmIXjhuFabQ7C2R4ce80Qo16p8PEFEbPPVHJEMekPuAWq26nvduse5n7slF0MH-pHblm2DxnH2VSLp8Gdxx9OMHX2A0huuprWBZaPwp14Fq6PZLMLp8tHiVtOvTCdW__Ug2jvrtrS9Zz14-f19dVeyJsPCA";
+export const localToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzQTk0RkM4MTg4Qzg3NkE5Njk2Mzg1QjU4NTUxQzg4OTYxNDE0RDdSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IlU2bFB5QmlNaDJxV2xqaGJXRlVjaUpZVUZOYyJ9.eyJuYmYiOjE3NTQ3OTY4MDIsImV4cCI6MTc1NDgwMDQwMiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvc21vc3Byby5jb20uYnIiLCJhdWQiOiJodHRwczovL2F1dGguY29zbW9zcHJvLmNvbS5ici9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJKYXZhc2NyaXB0Q2xpZW50Iiwic3ViIjoiMTU3NjAxIiwiYXV0aF90aW1lIjoxNzU0NTM4NTQzLCJpZHAiOiJsb2NhbCIsIkxvZ2luU2Vzc2lvbklEIjoiMzgyYjA1MmQtZjA0Ni00NjQ2LWFlZTgtNTVhN2U3NzhiYWM5IiwiTmFtZSI6ImFkbWluQHJlZGVub3NzYWZhcm1hLmNvbS5iciIsIkZyaWVuZGx5TmFtZSI6IkFkbWluaXN0cmFkb3IgLSBOb3NzYSBGYXJtYSIsIlByb2ZpbGUiOiIxIiwiSm9iUm9sZSI6IjYiLCJXZWVrZW5kU2NhbGUiOiIxIiwiVXNlclBpY3R1cmUiOiJiNjZlNzdiOS03NWMxLTRhMzYtOWQ0Mi03Yzk2N2UyOGYyZjAucG5nIiwicm9sZSI6ImFkbWluIiwiVGVuYW50SWQiOiIxMDE1NCIsIkxvZ28iOiIyOTdhYzQyMC0zYzY3LTQ0MzEtYWZkNS01ODcyYTBiMGQwZjYucG5nIiwiSWNvbiI6IiIsIkJhY2tncm91bmRJbWFnZSI6IiIsIk1haW5Db2xvciI6IiMzYzRjY2MiLCJGb250Q29sb3IiOiIjZmZmZmZmIiwiVGVuYW50TmFtZSI6Ik5vc3NhIEZhcm1hIiwiVGVuYW50S2V5IjoiUk5GIiwiQnJhbmNoIjoiIiwiRW1haWwiOiJhZG1pbkByZWRlbm9zc2FmYXJtYS5jb20uYnIiLCJUZW5hbnREb21haW4iOiJyZWRlbm9zc2FmYXJtYSIsIkFzc29jaWF0ZWRUZW5hbnRzIjpbInJlZGVub3NzYWZhcm1hIl0sIlRlbmFudE1pZ3JhdGVkIjoiVHJ1ZSIsImp0aSI6IkM4Q0MyRTI1RkVEQjI2QkJGODE3Njk5ODg1RTI2QzBFIiwic2lkIjoiQ0M4RDVBQkVCMkMwNzFCNTFENDQxNDk4RTlBOEQ5QTkiLCJpYXQiOjE3NTQ3OTY4MDIsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJlbWFpbCIsIldFQkFQSVBPUlRBTCIsIkNvc21vc1Byb1dlYkFwaSIsIklkZW50aXR5U2VydmVyQXBpIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbInB3ZCJdfQ.d9r6tdtEvUsTzKStILRddhACsURSRONcrSSbG-bgXCj0SaDMX4MscbPHM5xV9CAgAuGSrk-DYlGPUDYnZa6R0unyZBbQSc2jI6N3nsrHf74iPmGvuzsxw3dDFwNWQTIYKilBdp9fuclNZYL89xQbeYfWGEHAZ7YKWoUToBV7pMR_Tl6039zT5dBmq6UPyh2dKlu2W9hZ0dKHWotuMwhHEUnu5ScJCxVzOb-85K6VMhfxpOKBqgPiURIyNfHomZ_F0Z-fx52XhoCYWuEL7ils1sRLBmfV6JwKoYq4FwW1ibfaktxMSzEh2wV7F4cwRp7YQeC5DNbhL4lZHX8nESQtmg";
 
 // Função para verificar se está rodando localmente
 const isLocalhost = () => 
@@ -94,6 +94,7 @@ export interface OrderFilterParams {
   dateTo?: string;
   page?: number;
   pageSize?: number;
+  demanda?: number;  // Novo campo para filtrar por demanda
 }
 
 export const fetchOrders = async (params?: OrderFilterParams): Promise<OrderResponse> => {
@@ -138,6 +139,9 @@ export const fetchOrders = async (params?: OrderFilterParams): Promise<OrderResp
         console.error('Erro ao formatar data final para filtro:', error);
       }
     }
+
+    // Para filtrar por demanda, vamos fazer isso no código após receber os dados
+    // Não enviamos o parâmetro DEMANDA para a API pois a CustomView não o suporta
     
     console.log('URL da requisição:', url);
     console.log('Parâmetros de paginação:', urlParams);
@@ -149,6 +153,16 @@ export const fetchOrders = async (params?: OrderFilterParams): Promise<OrderResp
     // Log da resposta para debug
     if (response.data.value && response.data.value.length > 0) {
       console.log('Formato da data na resposta:', response.data.value[0].DATA);
+    }
+    
+    // Se tiver filtro de demanda, aplicar o filtro nos dados recebidos
+    if (params?.demanda) {
+      const filteredData = {
+        ...response.data,
+        value: response.data.value.filter(item => item.DEMANDA === params.demanda),
+        '@odata.count': response.data.value.filter(item => item.DEMANDA === params.demanda).length
+      };
+      return filteredData;
     }
     
     return response.data;
@@ -182,25 +196,34 @@ const transformItemsToApiFormat = (items: ApiOrderItem[]): OrderRequest[] => {
     // Log detalhado do item sendo processado
     console.log('Processando item completo:', JSON.stringify(item, null, 2));
 
-    // Verifica apenas o produto, não mais a quantidade
-    if (item.DEMANDA === undefined || item.DEMANDA === null || !item.COD_PROD) {
+    // Verifica se a demanda existe e se o COD_PROD é um número válido
+    const demanda = item.DEMANDA;
+    const codProd = item.COD_PROD;
+
+    if (!demanda || !codProd || isNaN(Number(codProd))) {
       console.warn('Item inválido. Valores:', {
-        demanda: item.DEMANDA,
-        codProd: item.COD_PROD
+        demanda,
+        codProd
       });
       return acc;
     }
 
-    const demandaGroup = acc.get(item.DEMANDA) || {
-      idDemanda: item.DEMANDA,
+    // Certifica-se que a demanda é um número
+    const demandaNumber = Number(item.DEMANDA);
+
+    const demandaGroup = acc.get(demandaNumber) || {
+      idDemanda: demandaNumber,
       produtos: []
     };
 
-    demandaGroup.produtos.push({
-      idProduto: item.COD_PROD
-    });
+    // Adiciona o produto apenas se ainda não estiver na lista
+    if (!demandaGroup.produtos.some(p => p.idProduto === item.COD_PROD)) {
+      demandaGroup.produtos.push({
+        idProduto: item.COD_PROD
+      });
+    }
 
-    acc.set(item.DEMANDA, demandaGroup);
+    acc.set(demandaNumber, demandaGroup);
     return acc;
   }, new Map<number, OrderRequest>());
 
@@ -232,7 +255,12 @@ export const sendOrders = async (items: ApiOrderItem[]): Promise<void> => {
     console.log('Enviando pedidos:', requestData);
     
     // Envia diretamente o array de pedidos
-    console.log('Payload completo:', requestData);
+    console.log('Payload completo:', JSON.stringify(requestData, null, 2));
+    
+    // Garantir que estamos enviando um array válido
+    if (!Array.isArray(requestData) || requestData.length === 0) {
+      throw new Error('Dados inválidos para envio');
+    }
     
     const response = await api.post('/api/ExecuteCustomAction/ExecuteAction?ActionName=Mmc_ListaPedidosEmail', requestData);
     console.log('Resposta da API:', response.data);

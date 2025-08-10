@@ -46,44 +46,35 @@ export const OrderConfirmationModal = ({
       console.log('Items selecionados:', selectedItems);
 
       // Mapear os itens selecionados para o formato esperado pela API
-      const itemsToSend = selectedItems.map(item => {
-        // Extrair o ID da demanda do ID do item ou usar um valor fixo para teste
-        // O formato esperado do ID é "cod_prod-demanda"
-        let demandaId = 1280419; // Valor fixo baseado no exemplo
-        try {
-          const itemIdParts = item.id.split('-');
-          if (itemIdParts.length > 1 && itemIdParts[1]) {
-            const parsedId = parseInt(itemIdParts[1]);
-            if (!isNaN(parsedId) && parsedId > 0) {
-              demandaId = parsedId;
-            }
-          }
-        } catch (e) {
-          console.warn('Erro ao extrair demanda do ID:', e);
-        }
-        
-        const mappedItem = {
-          UF: item.uf,
-          CD: parseInt(item.cd),
-          NOME_CD: item.nome_cd,
-          // CONDIC_COMERC field removed
-          FABRICANTE: item.fabricante,
-          TABELA_COD: parseInt(item.tabela_cod),
-          TABELA: item.tabela,
-          TIPO_ENVIO: item.tipo_envio,
-          EMAIL: item.email,
-          COD_PROD: parseInt(item.cod_prod),
-          EAN: item.ean,
-          PROD: item.produto,
-          P_BRUTO: item.preco_bruto,
-          DESC: item.desconto,
-          P_LIQ: item.preco_liquido,
-          TOT_P_LIQ_SOMA: item.total,
-          DEMANDA: demandaId  // Adicionamos a DEMANDA aqui
-        };
-        console.log('Item mapeado com DEMANDA:', mappedItem);
-        return mappedItem;
-      });
+      // Filtrar apenas os itens com os dados necessários
+      const itemsToSend = selectedItems
+        .filter(item => item.id && item.demanda) // Filtramos por ID e demanda
+        .map(item => {
+          // Extrair o código do produto do ID (formato: "COD_PROD-INDEX")
+          const codProd = parseInt(item.id.split('-')[0]);
+          
+          const mappedItem = {
+            UF: item.uf,
+            CD: parseInt(item.cd),
+            NOME_CD: '', // Campo opcional
+            FABRICANTE: '', // Campo opcional
+            TABELA_COD: 0, // Campo opcional
+            TABELA: item.tabela,
+            TIPO_ENVIO: '', // Campo opcional
+            EMAIL: '', // Campo opcional
+            COD_PROD: codProd, // Usando o código extraído do ID
+            EAN: item.ean,
+            PROD: item.produto,
+            QTD: item.qtd_comprada || 0,
+            P_BRUTO: item.preco_bruto,
+            DESC: item.desconto,
+            P_LIQ: item.preco_liquido,
+            TOT_P_LIQ_SOMA: item.total,
+            DEMANDA: item.demanda
+          };
+          console.log('Item mapeado com DEMANDA:', mappedItem);
+          return mappedItem;
+        });
 
       // Enviar os pedidos
       console.log('Enviando pedidos...');
