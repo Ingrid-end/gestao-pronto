@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 
-export const localToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzQTk0RkM4MTg4Qzg3NkE5Njk2Mzg1QjU4NTUxQzg4OTYxNDE0RDdSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IlU2bFB5QmlNaDJxV2xqaGJXRlVjaUpZVUZOYyJ9.eyJuYmYiOjE3NTQ3OTY4MDIsImV4cCI6MTc1NDgwMDQwMiwiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvc21vc3Byby5jb20uYnIiLCJhdWQiOiJodHRwczovL2F1dGguY29zbW9zcHJvLmNvbS5ici9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJKYXZhc2NyaXB0Q2xpZW50Iiwic3ViIjoiMTU3NjAxIiwiYXV0aF90aW1lIjoxNzU0NTM4NTQzLCJpZHAiOiJsb2NhbCIsIkxvZ2luU2Vzc2lvbklEIjoiMzgyYjA1MmQtZjA0Ni00NjQ2LWFlZTgtNTVhN2U3NzhiYWM5IiwiTmFtZSI6ImFkbWluQHJlZGVub3NzYWZhcm1hLmNvbS5iciIsIkZyaWVuZGx5TmFtZSI6IkFkbWluaXN0cmFkb3IgLSBOb3NzYSBGYXJtYSIsIlByb2ZpbGUiOiIxIiwiSm9iUm9sZSI6IjYiLCJXZWVrZW5kU2NhbGUiOiIxIiwiVXNlclBpY3R1cmUiOiJiNjZlNzdiOS03NWMxLTRhMzYtOWQ0Mi03Yzk2N2UyOGYyZjAucG5nIiwicm9sZSI6ImFkbWluIiwiVGVuYW50SWQiOiIxMDE1NCIsIkxvZ28iOiIyOTdhYzQyMC0zYzY3LTQ0MzEtYWZkNS01ODcyYTBiMGQwZjYucG5nIiwiSWNvbiI6IiIsIkJhY2tncm91bmRJbWFnZSI6IiIsIk1haW5Db2xvciI6IiMzYzRjY2MiLCJGb250Q29sb3IiOiIjZmZmZmZmIiwiVGVuYW50TmFtZSI6Ik5vc3NhIEZhcm1hIiwiVGVuYW50S2V5IjoiUk5GIiwiQnJhbmNoIjoiIiwiRW1haWwiOiJhZG1pbkByZWRlbm9zc2FmYXJtYS5jb20uYnIiLCJUZW5hbnREb21haW4iOiJyZWRlbm9zc2FmYXJtYSIsIkFzc29jaWF0ZWRUZW5hbnRzIjpbInJlZGVub3NzYWZhcm1hIl0sIlRlbmFudE1pZ3JhdGVkIjoiVHJ1ZSIsImp0aSI6IkM4Q0MyRTI1RkVEQjI2QkJGODE3Njk5ODg1RTI2QzBFIiwic2lkIjoiQ0M4RDVBQkVCMkMwNzFCNTFENDQxNDk4RTlBOEQ5QTkiLCJpYXQiOjE3NTQ3OTY4MDIsInNjb3BlIjpbIm9wZW5pZCIsInByb2ZpbGUiLCJlbWFpbCIsIldFQkFQSVBPUlRBTCIsIkNvc21vc1Byb1dlYkFwaSIsIklkZW50aXR5U2VydmVyQXBpIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbInB3ZCJdfQ.d9r6tdtEvUsTzKStILRddhACsURSRONcrSSbG-bgXCj0SaDMX4MscbPHM5xV9CAgAuGSrk-DYlGPUDYnZa6R0unyZBbQSc2jI6N3nsrHf74iPmGvuzsxw3dDFwNWQTIYKilBdp9fuclNZYL89xQbeYfWGEHAZ7YKWoUToBV7pMR_Tl6039zT5dBmq6UPyh2dKlu2W9hZ0dKHWotuMwhHEUnu5ScJCxVzOb-85K6VMhfxpOKBqgPiURIyNfHomZ_F0Z-fx52XhoCYWuEL7ils1sRLBmfV6JwKoYq4FwW1ibfaktxMSzEh2wV7F4cwRp7YQeC5DNbhL4lZHX8nESQtmg";
+export const localToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzQTk0RkM4MTg4Qzg3NkE5Njk2Mzg1QjU4NTUxQzg4OTYxNDE0RDdSUzI1NiIsInR5cCI6ImF0K2p3dCIsIng1dCI6IlU2bFB5QmlNaDJxV2xqaGJXRlVjaUpZVUZOYyJ9.eyJuYmYiOjE3NTQ5NDU5NTQsImV4cCI6MTc1NDk0OTU1NCwiaXNzIjoiaHR0cHM6Ly9hdXRoLmNvc21vc3Byby5jb20uYnIiLCJhdWQiOiJodHRwczovL2F1dGguY29zbW9zcHJvLmNvbS5ici9yZXNvdXJjZXMiLCJjbGllbnRfaWQiOiJKYXZhc2NyaXB0Q2xpZW50Iiwic3ViIjoiMTU3NjAxIiwiYXV0aF90aW1lIjoxNzU0OTI3MDgxLCJpZHAiOiJsb2NhbCIsIkxvZ2luU2Vzc2lvbklEIjoiZjQ1MzE0YjItZWU0Yy00NGI3LTljMDYtMmI0MzgzYTZhZTRhIiwiTmFtZSI6ImFkbWluQHJlZGVub3NzYWZhcm1hLmNvbS5iciIsIkZyaWVuZGx5TmFtZSI6IkFkbWluaXN0cmFkb3IgLSBOb3NzYSBGYXJtYSIsIlByb2ZpbGUiOiIxIiwiSm9iUm9sZSI6IjYiLCJXZWVrZW5kU2NhbGUiOiIxIiwiVXNlclBpY3R1cmUiOiJiNjZlNzdiOS03NWMxLTRhMzYtOWQ0Mi03Yzk2N2UyOGYyZjAucG5nIiwiSW5pdGlhbHMiOiJBRiIsIlVzZXJJZGVudGlmaWNhdGlvbkNoYXQiOiJUSWQtMTAxNTQ6VUlkLTE1NzYwMSIsIlVzZXJDaGF0U2lnbmF0dXJlIjoiMjMzNTM5MTRmZWFlOTA4YTRmNDJhNDM3ODQyZDk3NGJhYTA5ZWQ0YWE4MDE0OWNiN2EyMDlhYWEwYjJiNzA5ZCIsInJvbGUiOiJhZG1pbiIsIlRlbmFudElkIjoiMTAxNTQiLCJMb2dvIjoiMjk3YWM0MjAtM2M2Ny00NDMxLWFmZDUtNTg3MmEwYjBkMGY2LnBuZyIsIkljb24iOiIiLCJCYWNrZ3JvdW5kSW1hZ2UiOiIiLCJNYWluQ29sb3IiOiIjM2M0Y2NjIiwiRm9udENvbG9yIjoiI2ZmZmZmZiIsIlRlbmFudE5hbWUiOiJOb3NzYSBGYXJtYSIsIlRlbmFudEtleSI6IlJORiIsIkJyYW5jaCI6IiIsIkVtYWlsIjoiYWRtaW5AcmVkZW5vc3NhZmFybWEuY29tLmJyIiwiVGVuYW50RG9tYWluIjoicmVkZW5vc3NhZmFybWEiLCJBc3NvY2lhdGVkVGVuYW50cyI6WyJyZWRlbm9zc2FmYXJtYSJdLCJUZW5hbnRNaWdyYXRlZCI6IlRydWUiLCJqdGkiOiJBNTM1N0EzNzNCRDhDODZCNDQxODZCMjA5OUE3QUU3NSIsInNpZCI6IkRCOEI5NDcwOTc4MTdGRDc2QkM3QTkxOTJBMjg4Q0YwIiwiaWF0IjoxNzU0OTQ1OTU0LCJzY29wZSI6WyJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJXRUJBUElQT1JUQUwiLCJDb3Ntb3NQcm9XZWJBcGkiLCJJZGVudGl0eVNlcnZlckFwaSIsIm9mZmxpbmVfYWNjZXNzIl0sImFtciI6WyJwd2QiXX0.SgUC7VQ2bdJgwHGRn-6fuWzDyu2bLTruTn7_vFv71Z0Hd079sKpUuLw7I6sDBbNGmUfto4GgSOqWlNipzH_3xbp0RRjZ89xg577edj3IvdPQKd8uHYAwuLBWFuIwSm00FbQay_PsvMLQG9hNReeP_71rfY-dCEKOf6uEvEa1AQ1V7Qh919rR20wWvey67KT5k4TlTDEglIgSux-bVqr8NT7QMUU8MfjiE0mczMWbpV33pwQiFv5QWOlPhrPlZce2-I1z2IMhc8cLLGmYs23FkMtQTV13NzK7qMwj0BpPUg2xV-Pzikr4VsvV0BujcVTIFHlvv0Wu4iUdsod9tAo9mA";
 
 // Função para verificar se está rodando localmente
 const isLocalhost = () => 
@@ -12,7 +12,14 @@ const getToken = () => {
   if (isLocalhost()) {
     return localToken;
   }
-  return window.localStorage.getItem('Token');
+  const prodToken = window.localStorage.getItem('access_token');
+  return prodToken;
+};
+
+// Função para obter o refresh_token
+const getRefreshToken = () => {
+  const refreshToken = window.localStorage.getItem('refresh_token');
+  return refreshToken;
 };
 
 // Criação da instância do axios com interceptor
@@ -29,19 +36,49 @@ const createApi = (): AxiosInstance => {
     const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      console.warn('[axios interceptor] Nenhum token encontrado para Authorization');
     }
     return config;
   });
 
-  // Interceptor para tratamento de erros
+  // Interceptor para tratamento de erros e refresh automático do token
   api.interceptors.response.use(
     (response) => response,
-    (error) => {
+    async (error) => {
       if (error.response?.status === 401) {
-        // Token expirado ou inválido
-        window.localStorage.removeItem('Token');
-        // Redirecionar para login ou mostrar mensagem
-        console.error('Sessão expirada ou token inválido');
+        console.warn('[axios interceptor] 401 recebido, tentando refresh do token...');
+        const refreshToken = getRefreshToken();
+        if (refreshToken) {
+          try {
+            // Chame o endpoint de refresh (ajuste a URL conforme sua API)
+            const refreshResponse = await axios.post('https://portal.cosmospro.com.br:9191/api/refresh-token', {
+              refresh_token: refreshToken
+            });
+            const { access_token: newAccessToken, refresh_token: newRefreshToken } = refreshResponse.data as { access_token: string; refresh_token: string };
+            if (newAccessToken) {
+              window.localStorage.setItem('access_token', newAccessToken);
+            }
+            if (newRefreshToken) {
+              window.localStorage.setItem('refresh_token', newRefreshToken);
+            }
+            // Repita a requisição original com o novo token
+            error.config.headers.Authorization = `Bearer ${newAccessToken}`;
+            return api.request(error.config);
+          } catch (refreshError) {
+            console.error('[axios interceptor] Erro ao tentar refresh do token:', refreshError);
+            // Remover tokens e redirecionar para login
+            window.localStorage.removeItem('access_token');
+            window.localStorage.removeItem('refresh_token');
+            // Aqui você pode redirecionar para login se desejar
+            return Promise.reject(refreshError);
+          }
+        } else {
+          // Sem refresh_token, remover tokens e redirecionar para login
+          window.localStorage.removeItem('access_token');
+          window.localStorage.removeItem('refresh_token');
+          console.error('Sessão expirada ou token inválido, sem refresh_token disponível');
+        }
       }
       return Promise.reject(error);
     }
@@ -143,17 +180,10 @@ export const fetchOrders = async (params?: OrderFilterParams): Promise<OrderResp
     // Para filtrar por demanda, vamos fazer isso no código após receber os dados
     // Não enviamos o parâmetro DEMANDA para a API pois a CustomView não o suporta
     
-    console.log('URL da requisição:', url);
-    console.log('Parâmetros de paginação:', urlParams);
-    console.log('Parâmetros de corpo:', bodyParams);
     
     // Fazer a chamada com os parâmetros no body
     const response = await api.post(url, bodyParams);
     
-    // Log da resposta para debug
-    if (response.data.value && response.data.value.length > 0) {
-      console.log('Formato da data na resposta:', response.data.value[0].DATA);
-    }
     
     // Se tiver filtro de demanda, aplicar o filtro nos dados recebidos
     if (params?.demanda) {
@@ -189,12 +219,10 @@ const transformItemsToApiFormat = (items: ApiOrderItem[]): OrderRequest[] => {
     return [];
   }
 
-  console.log('Items recebidos para transformação:', JSON.stringify(items, null, 2));
 
   // Agrupa os itens por demanda
   const groupedByDemanda = items.reduce((acc, item) => {
     // Log detalhado do item sendo processado
-    console.log('Processando item completo:', JSON.stringify(item, null, 2));
 
     // Verifica se a demanda existe e se o COD_PROD é um número válido
     const demanda = item.DEMANDA;
@@ -228,7 +256,6 @@ const transformItemsToApiFormat = (items: ApiOrderItem[]): OrderRequest[] => {
   }, new Map<number, OrderRequest>());
 
   const result = Array.from(groupedByDemanda.values());
-  console.log('Dados transformados:', result);
   return result;
 };
 
@@ -245,17 +272,14 @@ export const sendOrders = async (items: ApiOrderItem[]): Promise<void> => {
     }
 
     const token = getToken();
-    console.log('Token atual:', token ? 'Present' : 'Missing');
     
     const requestData = transformItemsToApiFormat(items);
     if (requestData.length === 0) {
       throw new Error('Nenhum item válido para envio');
     }
 
-    console.log('Enviando pedidos:', requestData);
     
     // Envia diretamente o array de pedidos
-    console.log('Payload completo:', JSON.stringify(requestData, null, 2));
     
     // Garantir que estamos enviando um array válido
     if (!Array.isArray(requestData) || requestData.length === 0) {
@@ -263,7 +287,6 @@ export const sendOrders = async (items: ApiOrderItem[]): Promise<void> => {
     }
     
     const response = await api.post('/api/ExecuteCustomAction/ExecuteAction?ActionName=Mmc_ListaPedidosEmail', requestData);
-    console.log('Resposta da API:', response.data);
 
     // Valida a resposta da API
     const apiResponse = response.data as ApiResponse;
