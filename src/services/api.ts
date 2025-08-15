@@ -303,5 +303,6 @@ export const sendOrders = async (items: ApiOrderItem[]): Promise<void> => {
       errorMessage = error.message;
     }
     throw new Error(errorMessage);
+    
   }
 };
